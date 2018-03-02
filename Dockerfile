@@ -13,14 +13,11 @@ RUN set -x \
 	&& wget https://d2ap5zrlkavzl7.cloudfront.net/${MANAGER_VER}/ManagerServer.tar.gz -P /usr/share/manager-server \
 	&& tar -xzf /usr/share/manager-server/ManagerServer.tar.gz -C /usr/share/manager-server
 
-# Install systemctl script and start the server
-RUN printf "[Unit]\nAfter=network.target\n\n[Service]\nLimitNOFILE=1048576\nExecStart=/usr/bin/mono /usr/share/manager-server/ManagerServer.exe -port 8080\nRestart=on-failure\nStartLimitInterval=600\n\n[Install]\nWantedBy=multi-user.target" | tee /etc/systemd/system/manager-server.service \
-	&& systemctl daemon-reload \
-	&& systemctl start manager-server \
-	&& systemctl enable manager-server
-
 # Set work directory to the folder containing the server
 WORKDIR /usr/share/manager-server
 
 # Expose the HTTP port
 EXPOSE 8080
+
+# Run server in the foreground
+CMD ["/usr/bin/mono", "/usr/share/manager-server/ManagerServer.exe", "-port", "8080"]
