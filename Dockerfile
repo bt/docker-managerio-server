@@ -9,8 +9,8 @@ RUN set -x \
 	&& echo "deb http://download.mono-project.com/repo/ubuntu stable-xenial main" | sudo tee /etc/apt/sources.list.d/mono-official-stable.list \
 	&& apt-get update \
 	&& apt-get install -y mono-complete wget \
-	&& mkdir /usr/share/manager-server
-	&& wget https://d2ap5zrlkavzl7.cloudfront.net/${MANAGER_VER}/ManagerServer.tar.gz -P /usr/share/manager-server
+	&& mkdir /usr/share/manager-server \
+	&& wget https://d2ap5zrlkavzl7.cloudfront.net/${MANAGER_VER}/ManagerServer.tar.gz -P /usr/share/manager-server \
 	&& tar -xzf /usr/share/manager-server/ManagerServer.tar.gz -C /usr/share/manager-server
 
 # Install systemctl script and start the server
