@@ -13,6 +13,9 @@ RUN set -x \
 	&& wget https://d2ap5zrlkavzl7.cloudfront.net/${MANAGER_VER}/ManagerServer.tar.gz -P /usr/share/manager-server \
 	&& tar -xzf /usr/share/manager-server/ManagerServer.tar.gz -C /usr/share/manager-server
 
+# Set volume mount points
+VOLUME ["/data"]
+
 # Set work directory to the folder containing the server
 WORKDIR /usr/share/manager-server
 
@@ -20,4 +23,4 @@ WORKDIR /usr/share/manager-server
 EXPOSE 8080
 
 # Run server in the foreground
-CMD ["/usr/bin/mono", "/usr/share/manager-server/ManagerServer.exe", "-port", "8080"]
+CMD ["/usr/bin/mono", "/usr/share/manager-server/ManagerServer.exe", "-port", "8080", "-path", "/data"]
